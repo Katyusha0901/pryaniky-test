@@ -1,3 +1,3 @@
-export default function App() {
+export const App: React.FC = () => {
   return <div className="App"></div>;
-}
+};
