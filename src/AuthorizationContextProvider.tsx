@@ -17,13 +17,17 @@ interface Props {
 }
 
 export const AuthorizationContextProvider: React.FC<Props> = ({ children }) => {
-  const [isLogedIn, setIsLogedIn] = useState<boolean>(true);
+  const [isLogedIn, setIsLogedIn] = useState<boolean>(false);
+  
   function checkIsLogedIn() {
     if (localStorage.getItem("x-auth") === null) {
       setIsLogedIn(false);
+      console.log(isLogedIn);
     } else {
       setIsLogedIn(true);
+      console.log(isLogedIn);
     }
+    console.log(isLogedIn);
   }
 
   const authorizationContext: ContextType = {

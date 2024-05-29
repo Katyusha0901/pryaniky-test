@@ -12,6 +12,8 @@ import Grid from "@mui/material/Grid";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { AuthorizationContext } from "./AuthorizationContextProvider";
+import { useContext, useState } from "react";
 
 function Copyright(props: any) {
   return (
@@ -31,23 +33,41 @@ function Copyright(props: any) {
   );
 }
 
-// TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
 
-export default function SignInSide() {
+export function SignInSide() {
+  const { checkIsLogedIn } =
+    useContext(AuthorizationContext);
+
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
+    const user = {
+      username: data.get("username"),
       password: data.get("password"),
-    });
-  };
-
-  const requestOptions = {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ username: "user13", password: "password" }),
+    };
+    const requestOptions: {
+      method: string;
+      headers: HeadersInit;
+      body: BodyInit;
+    } = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(user),
+    };
+    fetch(
+      "https://test.v5.pryaniky.com/ru/data/v3/testmethods/docs/login",
+      requestOptions
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.data !== null) {
+          localStorage.setItem("x-auth", JSON.stringify(data.data.token));
+        } else {
+          localStorage.setItem("x-auth", JSON.stringify(data.data));
+        }
+        checkIsLogedIn();
+      });
   };
 
   return (
@@ -97,10 +117,10 @@ export default function SignInSide() {
                 margin="normal"
                 required
                 fullWidth
-                id="email"
-                label="Email Address"
-                name="email"
-                autoComplete="email"
+                id="username"
+                label="User Name"
+                name="username"
+                autoComplete="username"
                 autoFocus
               />
               <TextField
@@ -122,27 +142,6 @@ export default function SignInSide() {
                 fullWidth
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
-                onClick={() =>
-                  fetch(
-                    "https://test.v5.pryaniky.com/ru/data/v3/testmethods/docs/login",
-                    requestOptions
-                  )
-                    .then((response) => response.json())
-                    .then((data) => {
-                      if (data.data !== null) {
-                        console.log("data");
-                        localStorage.setItem(
-                          "x-auth",
-                          JSON.stringify(data.data.token)
-                        );
-                      } else {
-                        localStorage.setItem(
-                          "x-auth",
-                          JSON.stringify(data.data)
-                        );
-                      }
-                    })
-                }
               >
                 Sign In
               </Button>
