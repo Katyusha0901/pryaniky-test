@@ -13,7 +13,7 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { AuthorizationContext } from "./AuthorizationContextProvider";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 
 function Copyright(props: any) {
   return (
@@ -36,8 +36,7 @@ function Copyright(props: any) {
 const defaultTheme = createTheme();
 
 export function SignInSide() {
-  const { checkIsLogedIn } =
-    useContext(AuthorizationContext);
+  const { checkIsLogedIn } = useContext(AuthorizationContext);
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
