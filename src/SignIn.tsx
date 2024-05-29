@@ -128,17 +128,25 @@ export default function SignInSide() {
                     requestOptions
                   )
                     .then((response) => response.json())
-                    .then((data) =>
-                      localStorage.setItem(
-                        "x-auth",
-                        JSON.stringify(data.data.token)
-                      )
-                    )
+                    .then((data) => {
+                      if (data.data !== null) {
+                        console.log("data");
+                        localStorage.setItem(
+                          "x-auth",
+                          JSON.stringify(data.data.token)
+                        );
+                      } else {
+                        localStorage.setItem(
+                          "x-auth",
+                          JSON.stringify(data.data)
+                        );
+                      }
+                    })
                 }
               >
                 Sign In
               </Button>
-              
+
               <Copyright sx={{ mt: 5 }} />
             </Box>
           </Box>
