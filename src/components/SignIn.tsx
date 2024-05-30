@@ -12,7 +12,7 @@ import Grid from "@mui/material/Grid";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { AuthorizationContext } from "./AuthorizationContextProvider";
+import { AuthorizationContext } from "../AuthorizationContextProvider";
 import { useContext } from "react";
 
 function Copyright(props: any) {
@@ -62,10 +62,11 @@ export function SignInSide() {
       .then((data) => {
         if (data.data !== null) {
           localStorage.setItem("x-auth", JSON.stringify(data.data.token));
+          checkIsLogedIn();
         } else {
-          localStorage.setItem("x-auth", JSON.stringify(data.data));
+          localStorage.removeItem("x-auth");
+          checkIsLogedIn();
         }
-        checkIsLogedIn();
       });
   };
 

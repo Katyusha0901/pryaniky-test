@@ -1,14 +1,13 @@
+import { UndoRounded } from "@mui/icons-material";
 import { createContext, ReactNode, useState } from "react";
 
 interface ContextType {
-  isLogedIn: boolean;
-  setIsLogedIn: (array: boolean) => void;
+  isLogedIn: boolean | undefined;
   checkIsLogedIn: () => void;
 }
 
 export const AuthorizationContext = createContext<ContextType>({
-  isLogedIn: true,
-  setIsLogedIn: () => undefined,
+  isLogedIn: false,
   checkIsLogedIn: () => undefined,
 });
 
@@ -18,21 +17,16 @@ interface Props {
 
 export const AuthorizationContextProvider: React.FC<Props> = ({ children }) => {
   const [isLogedIn, setIsLogedIn] = useState<boolean>(false);
-  
+
   function checkIsLogedIn() {
-    if (localStorage.getItem("x-auth") === null) {
-      setIsLogedIn(false);
-      console.log(isLogedIn);
-    } else {
-      setIsLogedIn(true);
-      console.log(isLogedIn);
-    }
-    console.log(isLogedIn);
+    console.log(localStorage.getItem("x-auth"));
+    console.log(typeof localStorage.getItem("x-auth"));
+    setIsLogedIn(localStorage.getItem("x-auth") !== null);
   }
+  console.log(isLogedIn);
 
   const authorizationContext: ContextType = {
     isLogedIn,
-    setIsLogedIn,
     checkIsLogedIn,
   };
 

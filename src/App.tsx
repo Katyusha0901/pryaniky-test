@@ -1,5 +1,6 @@
-import { SignInSide } from "./SignIn";
-import { MainPage } from "./MainPage";
+import { SignInSide } from "./components/SignIn";
+import { MainPage } from "./components/MainPage";
+import { Registration } from "./components/Registration";
 import { AuthorizationContext } from "./AuthorizationContextProvider";
 import { useContext } from "react";
 import { RoutesObject } from "./Routes";
@@ -11,10 +12,19 @@ export const App: React.FC = () => {
   return isLogedIn ? (
     <Routes>
       <Route path={RoutesObject.mainPage} element={<MainPage />}></Route>
+      <Route
+        path={"*"}
+        element={<Navigate to={RoutesObject.mainPage} replace />}
+      ></Route>
     </Routes>
   ) : (
     <Routes>
       <Route path={RoutesObject.home} element={<SignInSide />}></Route>
+
+      <Route
+        path={RoutesObject.registration}
+        element={<Registration />}
+      ></Route>
       <Route
         path={"*"}
         element={<Navigate to={RoutesObject.home} replace />}
