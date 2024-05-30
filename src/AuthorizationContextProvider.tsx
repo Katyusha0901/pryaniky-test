@@ -7,7 +7,7 @@ interface ContextType {
 }
 
 export const AuthorizationContext = createContext<ContextType>({
-  isLogedIn: false,
+  isLogedIn: localStorage.getItem("x-auth") !== null,
   checkIsLogedIn: () => undefined,
 });
 
@@ -16,7 +16,9 @@ interface Props {
 }
 
 export const AuthorizationContextProvider: React.FC<Props> = ({ children }) => {
-  const [isLogedIn, setIsLogedIn] = useState<boolean>(false);
+  const [isLogedIn, setIsLogedIn] = useState<boolean>(
+    localStorage.getItem("x-auth") !== null
+  );
 
   function checkIsLogedIn() {
     console.log(localStorage.getItem("x-auth"));
