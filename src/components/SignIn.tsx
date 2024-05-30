@@ -66,6 +66,9 @@ export function SignInSide() {
         } else {
           localStorage.removeItem("x-auth");
           checkIsLogedIn();
+          localStorage.setItem("isRegistration", JSON.stringify(false));
+
+          // checkIsRegistration();
         }
       });
   };

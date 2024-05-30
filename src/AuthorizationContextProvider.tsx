@@ -2,13 +2,17 @@ import { UndoRounded } from "@mui/icons-material";
 import { createContext, ReactNode, useState } from "react";
 
 interface ContextType {
-  isLogedIn: boolean | undefined;
+  isLogedIn: boolean;
+  isRegistration: boolean;
   checkIsLogedIn: () => void;
+  //   checkIsRegistration: () => void;
 }
 
 export const AuthorizationContext = createContext<ContextType>({
   isLogedIn: localStorage.getItem("x-auth") !== null,
+  isRegistration: true,
   checkIsLogedIn: () => undefined,
+  //   checkIsRegistration: () => undefined,
 });
 
 interface Props {
@@ -19,17 +23,24 @@ export const AuthorizationContextProvider: React.FC<Props> = ({ children }) => {
   const [isLogedIn, setIsLogedIn] = useState<boolean>(
     localStorage.getItem("x-auth") !== null
   );
+  const [isRegistration, setIsRegistration] = useState<boolean>(
+    localStorage.getItem("isRegistration") !== null
+  );
 
   function checkIsLogedIn() {
-    console.log(localStorage.getItem("x-auth"));
-    console.log(typeof localStorage.getItem("x-auth"));
     setIsLogedIn(localStorage.getItem("x-auth") !== null);
+    // isLogedIn ? setIsRegistration(true) : setIsRegistration(false);
   }
-  console.log(isLogedIn);
+  console.log(isRegistration);
+  //   function checkIsRegistration() {
+  //     isLogedIn ? setIsRegistration(true) : setIsRegistration(false);
+  //   }
 
   const authorizationContext: ContextType = {
     isLogedIn,
+    isRegistration,
     checkIsLogedIn,
+    // checkIsRegistration,
   };
 
   return (
