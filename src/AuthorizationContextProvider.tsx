@@ -5,14 +5,14 @@ interface ContextType {
   isLogedIn: boolean;
   isRegistration: boolean;
   checkIsLogedIn: () => void;
-  //   checkIsRegistration: () => void;
+  checkIsRegistration: () => void;
 }
 
 export const AuthorizationContext = createContext<ContextType>({
   isLogedIn: localStorage.getItem("x-auth") !== null,
   isRegistration: true,
   checkIsLogedIn: () => undefined,
-  //   checkIsRegistration: () => undefined,
+  checkIsRegistration: () => undefined,
 });
 
 interface Props {
@@ -23,24 +23,24 @@ export const AuthorizationContextProvider: React.FC<Props> = ({ children }) => {
   const [isLogedIn, setIsLogedIn] = useState<boolean>(
     localStorage.getItem("x-auth") !== null
   );
+
   const [isRegistration, setIsRegistration] = useState<boolean>(
     localStorage.getItem("isRegistration") !== null
   );
 
   function checkIsLogedIn() {
     setIsLogedIn(localStorage.getItem("x-auth") !== null);
-    // isLogedIn ? setIsRegistration(true) : setIsRegistration(false);
   }
-  console.log(isRegistration);
-  //   function checkIsRegistration() {
-  //     isLogedIn ? setIsRegistration(true) : setIsRegistration(false);
-  //   }
+
+  function checkIsRegistration() {
+    setIsRegistration(localStorage.getItem("isRegistration") !== null);
+  }
 
   const authorizationContext: ContextType = {
     isLogedIn,
     isRegistration,
     checkIsLogedIn,
-    // checkIsRegistration,
+    checkIsRegistration,
   };
 
   return (
