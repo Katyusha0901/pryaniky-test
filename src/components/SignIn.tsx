@@ -62,7 +62,7 @@ export function SignInSide() {
       .then((response) => response.json())
       .then((data) => {
         if (data.data !== null) {
-          localStorage.setItem("x-auth", JSON.stringify(data.data.token));
+          localStorage.setItem("x-auth", data.data.token);
           checkIsLogedIn();
         } else {
           localStorage.removeItem("x-auth");
