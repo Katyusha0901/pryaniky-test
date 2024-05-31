@@ -6,7 +6,9 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import axios from "axios";
+import { TableEntry } from "../Types";
+import { useState } from "react";
+import Button from "@mui/material/Button";
 
 function createData(
   name: string,
@@ -27,6 +29,7 @@ const rows = [
 ];
 
 export function MainPage() {
+  const [dataEntry, setDataEntry] = useState<TableEntry[]>([]);
   fetch(
     "https://test.v5.pryaniky.com/ru/data/v3/testmethods/docs/userdocs/get",
     {
@@ -39,38 +42,53 @@ export function MainPage() {
   )
     .then((response) => response.json())
     .then((data) => {
-      console.log(data);
+      setDataEntry(data.data);
     });
-
+  (function () {
+    dataEntry.map((entry) => {
+      for (let prop in entry) {
+      }
+    });
+  })();
+  // function takeValue(object: object) {
+  //   let values = [];
+  //   for (let prop in object) {
+  //     values.push(prop.replace(/"/g, ""));
+  //   }
+  //   return values;
+  // }
+  // console.log(takeValue(dataEntry[0])[1].replace(/"/g, ""));
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
-        <TableHead>
-          <TableRow>
-            <TableCell>Dessert (100g serving)</TableCell>
-            <TableCell align="right">Calories</TableCell>
-            <TableCell align="right">Fat&nbsp;(g)</TableCell>
-            <TableCell align="right">Carbs&nbsp;(g)</TableCell>
-            <TableCell align="right">Protein&nbsp;(g)</TableCell>
-          </TableRow>
-        </TableHead>
         <TableBody>
-          {rows.map((row) => (
+          {dataEntry.map((entry) => (
             <TableRow
-              key={row.name}
+              key={entry.id}
               sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
             >
-              <TableCell component="th" scope="row">
-                {row.name}
-              </TableCell>
-              <TableCell align="right">{row.calories}</TableCell>
-              <TableCell align="right">{row.fat}</TableCell>
-              <TableCell align="right">{row.carbs}</TableCell>
-              <TableCell align="right">{row.protein}</TableCell>
+              {/* {takeValue(entry).map((key) => (<TableCell align="right">{entry.key}</TableCell>))} */}
+              <Button variant="contained" style={{ margin: "5px" }}>
+                Изменить запись
+              </Button>
+              <Button variant="contained" style={{ margin: "5px" }}>
+                Удалить запись
+              </Button>
+              <TableCell align="right">{entry.companySigDate}</TableCell>
+              <TableCell align="right">{entry.companySignatureName}</TableCell>
+              <TableCell align="right">{entry.documentName}</TableCell>
+              <TableCell align="right">{entry.documentStatus}</TableCell>
+              <TableCell align="right">{entry.documentType}</TableCell>
+              <TableCell align="right">{entry.employeeNumber}</TableCell>
+              <TableCell align="right">{entry.employeeSigDate}</TableCell>
+              <TableCell align="right">{entry.employeeSignatureName}</TableCell>
             </TableRow>
           ))}
         </TableBody>
       </Table>
+      <Button variant="contained" style={{ margin: "20px" }}>
+        Добавить запись
+      </Button>
     </TableContainer>
   );
 }
