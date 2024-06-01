@@ -2,7 +2,7 @@ import { SignInSide } from "./components/SignIn";
 import { MainPage } from "./components/MainPage";
 import { Registration } from "./components/Registration";
 import { AuthorizationContext } from "./AuthorizationContextProvider";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { RoutesObject } from "./Routes";
 import { Routes, Route } from "react-router-dom";
 import { Navigate } from "react-router-dom";

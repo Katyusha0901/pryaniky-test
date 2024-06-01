@@ -1,7 +1,4 @@
 import Button from "@mui/material/Button";
-import { useContext } from "react";
-import { AuthorizationContext } from "../AuthorizationContextProvider";
-import { TableEntry } from "../Types";
 
 interface Props {
   rowId: string;
