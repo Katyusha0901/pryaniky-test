@@ -1,4 +1,3 @@
-import { UndoRounded } from "@mui/icons-material";
 import { createContext, ReactNode, useEffect, useState } from "react";
 import { TableEntry } from "./Types";
 
@@ -33,14 +32,6 @@ export const AuthorizationContextProvider: React.FC<Props> = ({ children }) => {
     localStorage.getItem("isRegistration") !== null
   );
 
-  function checkIsLogedIn() {
-    setIsLogedIn(localStorage.getItem("x-auth") !== null);
-  }
-
-  function checkIsRegistration() {
-    setIsRegistration(localStorage.getItem("isRegistration") !== null);
-  }
-
   const [dataEntry, setDataEntry] = useState<TableEntry[]>([]);
 
   const authorizationContext: ContextType = {
@@ -52,7 +43,15 @@ export const AuthorizationContextProvider: React.FC<Props> = ({ children }) => {
     setDataEntry,
   };
 
-  function zapros() {
+  function checkIsLogedIn() {
+    setIsLogedIn(localStorage.getItem("x-auth") !== null);
+  }
+
+  function checkIsRegistration() {
+    setIsRegistration(localStorage.getItem("isRegistration") !== null);
+  }
+
+  function takeData() {
     fetch(
       "https://test.v5.pryaniky.com/ru/data/v3/testmethods/docs/userdocs/get",
       {
@@ -70,7 +69,7 @@ export const AuthorizationContextProvider: React.FC<Props> = ({ children }) => {
   }
 
   useEffect(() => {
-    zapros();
+    takeData();
   }, [isLogedIn]);
 
   return (

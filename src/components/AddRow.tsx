@@ -1,12 +1,9 @@
 import Button from "@mui/material/Button";
-import { useState } from "react";
-import { TableEntry } from "../Types";
 import { useContext } from "react";
 import { AuthorizationContext } from "../AuthorizationContextProvider";
 
 export function AddRow() {
   const { dataEntry, setDataEntry } = useContext(AuthorizationContext);
-
   const newEntry = {
     companySigDate: "2022-12-23T11:19:27.017Z\t",
     companySignatureName: "test",
@@ -29,7 +26,6 @@ export function AddRow() {
     },
     body: JSON.stringify(newEntry),
   };
-  //   let array: TableEntry[] = [];
 
   return (
     <Button
@@ -42,11 +38,6 @@ export function AddRow() {
         )
           .then((response) => response.json())
           .then((data) => {
-            // data.data.map((element: TableEntry) => {
-            //   array.push(element);
-            // });
-            console.log(data.data);
-
             setDataEntry([...dataEntry, data.data]);
           });
       }}
