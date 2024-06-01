@@ -12,6 +12,7 @@ import Box from "@mui/material/Box";
 import { useContext } from "react";
 import { AuthorizationContext } from "../AuthorizationContextProvider";
 
+
 export function MainPage() {
   const { dataEntry } = useContext(AuthorizationContext);
 
