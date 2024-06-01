@@ -32,7 +32,6 @@ const rows = [
 
 export function MainPage() {
   const [dataEntry, setDataEntry] = useState<TableEntry[]>([]);
-  const [isData, setIsData] = useState<boolean>(dataEntry.length === 0);
   fetch(
     "https://test.v5.pryaniky.com/ru/data/v3/testmethods/docs/userdocs/get",
     {
@@ -48,12 +47,6 @@ export function MainPage() {
       localStorage.setItem("data", data);
       setDataEntry(data.data);
     });
-  (function () {
-    dataEntry.map((entry) => {
-      for (let prop in entry) {
-      }
-    });
-  })();
 
   return dataEntry.length > 0 ? (
     <TableContainer component={Paper}>
