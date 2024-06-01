@@ -97,7 +97,7 @@ export function Registration() {
               required
               fullWidth
               id="username"
-              label="User Name"
+              label="User Name, enter user{N}, N=1,2,...33"
               name="username"
               autoComplete="username"
               autoFocus
