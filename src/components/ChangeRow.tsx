@@ -7,7 +7,7 @@ interface Props {
 }
 
 export const ChangeRow: React.FC<Props> = ({ rowId }) => {
-  const { dataEntry, setDataEntry, changeRow } =
+  const { dataRows, setdataRows, changeRow } =
     useContext(AuthorizationContext);
   const newEntry = {
     companySigDate: "2022-12-23T11:19:27.017Z\t",
@@ -32,7 +32,7 @@ export const ChangeRow: React.FC<Props> = ({ rowId }) => {
     body: JSON.stringify(newEntry),
   };
 
-  console.log(dataEntry);
+  console.log(dataRows);
   return (
     <Button
       variant="contained"
@@ -44,7 +44,7 @@ export const ChangeRow: React.FC<Props> = ({ rowId }) => {
         )
           .then((response) => response.json())
           .then((data) => {
-            setDataEntry(changeRow(rowId, data));
+            setdataRows(changeRow(rowId, data));
           });
       }}
     >

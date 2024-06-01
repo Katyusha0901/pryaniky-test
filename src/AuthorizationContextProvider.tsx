@@ -6,8 +6,8 @@ interface ContextType {
   isRegistration: boolean;
   checkIsLogedIn: () => void;
   checkIsRegistration: () => void;
-  dataEntry: TableEntry[];
-  setDataEntry: React.Dispatch<React.SetStateAction<TableEntry[]>>;
+  dataRows: TableEntry[];
+  setdataRows: React.Dispatch<React.SetStateAction<TableEntry[]>>;
   deleteRow: (entryId: string) => void;
   changeRow: (
     rowId: string,
@@ -20,8 +20,8 @@ export const AuthorizationContext = createContext<ContextType>({
   isRegistration: true,
   checkIsLogedIn: () => undefined,
   checkIsRegistration: () => undefined,
-  dataEntry: [],
-  setDataEntry: () => undefined,
+  dataRows: [],
+  setdataRows: () => undefined,
   deleteRow: () => undefined,
   changeRow: (rowId, data) => [],
 });
@@ -39,15 +39,15 @@ export const AuthorizationContextProvider: React.FC<Props> = ({ children }) => {
     localStorage.getItem("isRegistration") !== null
   );
 
-  const [dataEntry, setDataEntry] = useState<TableEntry[]>([]);
+  const [dataRows, setdataRows] = useState<TableEntry[]>([]);
 
   const authorizationContext: ContextType = {
     isLogedIn,
     isRegistration,
     checkIsLogedIn,
     checkIsRegistration,
-    dataEntry,
-    setDataEntry,
+    dataRows,
+    setdataRows,
     deleteRow,
     changeRow,
   };
@@ -77,26 +77,26 @@ export const AuthorizationContextProvider: React.FC<Props> = ({ children }) => {
     )
       .then((response) => response.json())
       .then((data) => {
-        setDataEntry(data.data);
+        setdataRows(data.data);
       });
   }
 
   function deleteRow(entryId: string) {
-    setDataEntry(dataEntry.filter((entry) => entry.id !== entryId));
+    setdataRows(dataRows.filter((entry) => entry.id !== entryId));
   }
 
   function changeRow(
     rowId: string,
     data: { error_code: number; error_message: string; data: TableEntry }
   ) {
-    const newDataEntry: TableEntry[] = dataEntry.map((entry) => {
+    const newdataRows: TableEntry[] = dataRows.map((entry) => {
       if (entry.id === rowId) {
         return data.data;
       }
       return entry;
     });
-    setDataEntry(newDataEntry);
-    return newDataEntry;
+    setdataRows(newdataRows);
+    return newdataRows;
   }
 
   return (

@@ -15,13 +15,13 @@ import { useContext } from "react";
 import { AuthorizationContext } from "../AuthorizationContextProvider";
 
 export function MainPage() {
-  const { dataEntry, deleteRow } = useContext(AuthorizationContext);
+  const { dataRows, deleteRow } = useContext(AuthorizationContext);
 
-  return dataEntry.length > 0 ? (
+  return dataRows.length > 0 ? (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableBody>
-          {dataEntry.map((entry) => (
+          {dataRows.map((entry) => (
             <TableRow
               key={entry.id}
               sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
