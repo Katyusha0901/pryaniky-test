@@ -11,6 +11,8 @@ import Button from "@mui/material/Button";
 import { AddRow } from "./AddRow";
 import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
+import { useContext } from "react";
+import { AuthorizationContext } from "../AuthorizationContextProvider";
 
 function createData(
   name: string,
@@ -31,23 +33,9 @@ const rows = [
 ];
 
 export function MainPage() {
-  const [dataEntry, setDataEntry] = useState<TableEntry[]>([]);
-  fetch(
-    "https://test.v5.pryaniky.com/ru/data/v3/testmethods/docs/userdocs/get",
-    {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        "x-auth": `${localStorage.getItem("x-auth")}`,
-      },
-    }
-  )
-    .then((response) => response.json())
-    .then((data) => {
-      localStorage.setItem("data", data);
-      setDataEntry(data.data);
-    });
+  const { dataEntry, setDataEntry } = useContext(AuthorizationContext);
 
+  console.log(dataEntry);
   return dataEntry.length > 0 ? (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -57,7 +45,6 @@ export function MainPage() {
               key={entry.id}
               sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
             >
-              {/* {takeValue(entry).map((key) => (<TableCell align="right">{entry.key}</TableCell>))} */}
               <Button variant="contained" style={{ margin: "5px" }}>
                 Изменить запись
               </Button>

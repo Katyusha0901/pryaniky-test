@@ -1,8 +1,56 @@
 import Button from "@mui/material/Button";
+import { useState } from "react";
+import { TableEntry } from "../Types";
+import { useContext } from "react";
+import { AuthorizationContext } from "../AuthorizationContextProvider";
 
 export function AddRow() {
+  const { dataEntry, setDataEntry } = useContext(AuthorizationContext);
+
+  const newEntry = {
+    companySigDate: "2022-12-23T11:19:27.017Z\t",
+    companySignatureName: "test",
+    documentName: "test",
+    documentStatus: "test",
+    documentType: "test",
+    employeeNumber: "test",
+    employeeSigDate: "2022-12-23T11:19:27.017Z\t",
+    employeeSignatureName: "test",
+  };
+  const requestOptions: {
+    method: string;
+    headers: HeadersInit;
+    body: BodyInit;
+  } = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "x-auth": `${localStorage.getItem("x-auth")}`,
+    },
+    body: JSON.stringify(newEntry),
+  };
+  //   let array: TableEntry[] = [];
+
   return (
-    <Button variant="contained" style={{ margin: "20px" }}>
+    <Button
+      variant="contained"
+      style={{ margin: "20px" }}
+      onClick={() => {
+        fetch(
+          "https://test.v5.pryaniky.com/ru/data/v3/testmethods/docs/userdocs/create",
+          requestOptions
+        )
+          .then((response) => response.json())
+          .then((data) => {
+            // data.data.map((element: TableEntry) => {
+            //   array.push(element);
+            // });
+            console.log(data.data);
+
+            setDataEntry([...dataEntry, data.data]);
+          });
+      }}
+    >
       Добавить запись
     </Button>
   );

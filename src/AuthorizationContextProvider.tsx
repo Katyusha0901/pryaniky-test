@@ -1,11 +1,14 @@
 import { UndoRounded } from "@mui/icons-material";
-import { createContext, ReactNode, useState } from "react";
+import { createContext, ReactNode, useEffect, useState } from "react";
+import { TableEntry } from "./Types";
 
 interface ContextType {
   isLogedIn: boolean;
   isRegistration: boolean;
   checkIsLogedIn: () => void;
   checkIsRegistration: () => void;
+  dataEntry: TableEntry[];
+  setDataEntry: React.Dispatch<React.SetStateAction<TableEntry[]>>;
 }
 
 export const AuthorizationContext = createContext<ContextType>({
@@ -13,6 +16,8 @@ export const AuthorizationContext = createContext<ContextType>({
   isRegistration: true,
   checkIsLogedIn: () => undefined,
   checkIsRegistration: () => undefined,
+  dataEntry: [],
+  setDataEntry: () => undefined,
 });
 
 interface Props {
@@ -36,12 +41,37 @@ export const AuthorizationContextProvider: React.FC<Props> = ({ children }) => {
     setIsRegistration(localStorage.getItem("isRegistration") !== null);
   }
 
+  const [dataEntry, setDataEntry] = useState<TableEntry[]>([]);
+
   const authorizationContext: ContextType = {
     isLogedIn,
     isRegistration,
     checkIsLogedIn,
     checkIsRegistration,
+    dataEntry,
+    setDataEntry,
   };
+
+  function zapros() {
+    fetch(
+      "https://test.v5.pryaniky.com/ru/data/v3/testmethods/docs/userdocs/get",
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "x-auth": `${localStorage.getItem("x-auth")}`,
+        },
+      }
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        setDataEntry(data.data);
+      });
+  }
+
+  useEffect(() => {
+    zapros();
+  }, [isLogedIn]);
 
   return (
     <AuthorizationContext.Provider value={authorizationContext}>
