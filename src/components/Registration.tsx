@@ -36,7 +36,7 @@ function Copyright(props: any) {
 const defaultTheme = createTheme();
 
 export function Registration() {
-  const { checkisLoggedIn } = useContext(AuthorizationContext);
+  const { checkisLoggedIn, HOST } = useContext(AuthorizationContext);
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -54,10 +54,7 @@ export function Registration() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(user),
     };
-    fetch(
-      "https://test.v5.pryaniky.com/ru/data/v3/testmethods/docs/login",
-      requestOptions
-    )
+    fetch(`${HOST}/ru/data/v3/testmethods/docs/login`, requestOptions)
       .then((response) => response.json())
       .then((data) => {
         if (data.data !== null) {
