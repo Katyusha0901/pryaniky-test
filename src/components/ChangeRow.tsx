@@ -7,7 +7,7 @@ interface Props {
 }
 
 export const ChangeRow: React.FC<Props> = ({ rowId }) => {
-  const { dataRows, setdataRows, changeRow } =
+  const { dataRows, setdataRows, changeRow, HOST } =
     useContext(AuthorizationContext);
   const newEntry = {
     companySigDate: "2022-12-23T11:19:27.017Z\t",
@@ -39,7 +39,7 @@ export const ChangeRow: React.FC<Props> = ({ rowId }) => {
       style={{ margin: "20px" }}
       onClick={() => {
         fetch(
-          `https://test.v5.pryaniky.com/ru/data/v3/testmethods/docs/userdocs/set/${rowId}`,
+          `${HOST}/ru/data/v3/testmethods/docs/userdocs/set/${rowId}`,
           requestOptions
         )
           .then((response) => response.json())

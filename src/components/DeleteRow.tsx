@@ -9,16 +9,16 @@ interface Props {
 }
 
 export const DeleteRow: React.FC<Props> = ({ rowId, deleteRow }) => {
-  const requestOptions: {
-    method: string;
-    headers: HeadersInit;
-  } = {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "x-auth": `${localStorage.getItem("x-auth")}`,
-    },
-  };
+  //   const requestOptions: {
+  //     method: string;
+  //     headers: HeadersInit;
+  //   } = {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //       "x-auth": `${localStorage.getItem("x-auth")}`,
+  //     },
+  //   };
 
   return (
     <Button

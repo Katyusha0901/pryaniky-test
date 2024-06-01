@@ -4,6 +4,7 @@ import { TableEntry } from "./Types";
 interface ContextType {
   isLoggedIn: boolean;
   isRegistration: boolean;
+  HOST: string;
   checkisLoggedIn: () => void;
   checkIsRegistration: () => void;
   dataRows: TableEntry[];
@@ -18,6 +19,7 @@ interface ContextType {
 export const AuthorizationContext = createContext<ContextType>({
   isLoggedIn: localStorage.getItem("x-auth") !== null,
   isRegistration: true,
+  HOST: "https://test.v5.pryaniky.com",
   checkisLoggedIn: () => undefined,
   checkIsRegistration: () => undefined,
   dataRows: [],
@@ -41,9 +43,12 @@ export const AuthorizationContextProvider: React.FC<Props> = ({ children }) => {
 
   const [dataRows, setdataRows] = useState<TableEntry[]>([]);
 
+  const HOST = "https://test.v5.pryaniky.com";
+
   const authorizationContext: ContextType = {
     isLoggedIn,
     isRegistration,
+    HOST,
     checkisLoggedIn,
     checkIsRegistration,
     dataRows,
@@ -65,16 +70,13 @@ export const AuthorizationContextProvider: React.FC<Props> = ({ children }) => {
   }
 
   function takeData() {
-    fetch(
-      "https://test.v5.pryaniky.com/ru/data/v3/testmethods/docs/userdocs/get",
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          "x-auth": `${localStorage.getItem("x-auth")}`,
-        },
-      }
-    )
+    fetch(`${HOST}/ru/data/v3/testmethods/docs/userdocs/get`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "x-auth": `${localStorage.getItem("x-auth")}`,
+      },
+    })
       .then((response) => response.json())
       .then((data) => {
         setdataRows(data.data);
