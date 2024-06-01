@@ -36,7 +36,7 @@ function Copyright(props: any) {
 const defaultTheme = createTheme();
 
 export function SignInSide() {
-  const { checkIsLogedIn, checkIsRegistration } =
+  const { checkisLoggedIn, checkIsRegistration } =
     useContext(AuthorizationContext);
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -63,10 +63,10 @@ export function SignInSide() {
       .then((data) => {
         if (data.data !== null) {
           localStorage.setItem("x-auth", data.data.token);
-          checkIsLogedIn();
+          checkisLoggedIn();
         } else {
           localStorage.removeItem("x-auth");
-          checkIsLogedIn();
+          checkisLoggedIn();
           localStorage.setItem("isRegistration", JSON.stringify(false));
           checkIsRegistration();
         }

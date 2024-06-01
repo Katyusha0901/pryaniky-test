@@ -2,9 +2,9 @@ import { createContext, ReactNode, useEffect, useState } from "react";
 import { TableEntry } from "./Types";
 
 interface ContextType {
-  isLogedIn: boolean;
+  isLoggedIn: boolean;
   isRegistration: boolean;
-  checkIsLogedIn: () => void;
+  checkisLoggedIn: () => void;
   checkIsRegistration: () => void;
   dataRows: TableEntry[];
   setdataRows: React.Dispatch<React.SetStateAction<TableEntry[]>>;
@@ -16,9 +16,9 @@ interface ContextType {
 }
 
 export const AuthorizationContext = createContext<ContextType>({
-  isLogedIn: localStorage.getItem("x-auth") !== null,
+  isLoggedIn: localStorage.getItem("x-auth") !== null,
   isRegistration: true,
-  checkIsLogedIn: () => undefined,
+  checkisLoggedIn: () => undefined,
   checkIsRegistration: () => undefined,
   dataRows: [],
   setdataRows: () => undefined,
@@ -31,7 +31,7 @@ interface Props {
 }
 
 export const AuthorizationContextProvider: React.FC<Props> = ({ children }) => {
-  const [isLogedIn, setIsLogedIn] = useState<boolean>(
+  const [isLoggedIn, setisLoggedIn] = useState<boolean>(
     localStorage.getItem("x-auth") !== null
   );
 
@@ -42,9 +42,9 @@ export const AuthorizationContextProvider: React.FC<Props> = ({ children }) => {
   const [dataRows, setdataRows] = useState<TableEntry[]>([]);
 
   const authorizationContext: ContextType = {
-    isLogedIn,
+    isLoggedIn,
     isRegistration,
-    checkIsLogedIn,
+    checkisLoggedIn,
     checkIsRegistration,
     dataRows,
     setdataRows,
@@ -54,10 +54,10 @@ export const AuthorizationContextProvider: React.FC<Props> = ({ children }) => {
 
   useEffect(() => {
     takeData();
-  }, [isLogedIn]);
+  }, [isLoggedIn]);
 
-  function checkIsLogedIn() {
-    setIsLogedIn(localStorage.getItem("x-auth") !== null);
+  function checkisLoggedIn() {
+    setisLoggedIn(localStorage.getItem("x-auth") !== null);
   }
 
   function checkIsRegistration() {

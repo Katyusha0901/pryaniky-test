@@ -8,9 +8,9 @@ import { Routes, Route } from "react-router-dom";
 import { Navigate } from "react-router-dom";
 
 export const App: React.FC = () => {
-  const { isLogedIn, isRegistration } = useContext(AuthorizationContext);
+  const { isLoggedIn, isRegistration } = useContext(AuthorizationContext);
 
-  return isLogedIn ? (
+  return isLoggedIn ? (
     <Routes>
       <Route path={RoutesObject.mainPage} element={<MainPage />}></Route>
       <Route
