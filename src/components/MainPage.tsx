@@ -7,14 +7,15 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import Button from "@mui/material/Button";
 import { AddRow } from "./AddRow";
+import { DeleteRow } from "./DeleteRow";
+import { ChangeRow } from "./ChangeRow";
 import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
 import { useContext } from "react";
 import { AuthorizationContext } from "../AuthorizationContextProvider";
 
-
 export function MainPage() {
-  const { dataEntry } = useContext(AuthorizationContext);
+  const { dataEntry, deleteRow } = useContext(AuthorizationContext);
 
   return dataEntry.length > 0 ? (
     <TableContainer component={Paper}>
@@ -25,12 +26,8 @@ export function MainPage() {
               key={entry.id}
               sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
             >
-              <Button variant="contained" style={{ margin: "5px" }}>
-                Изменить запись
-              </Button>
-              <Button variant="contained" style={{ margin: "5px" }}>
-                Удалить запись
-              </Button>
+              <ChangeRow rowId={entry.id} />
+              <DeleteRow rowId={entry.id} deleteRow={deleteRow} />
               <TableCell align="right">{entry.companySigDate}</TableCell>
               <TableCell align="right">{entry.companySignatureName}</TableCell>
               <TableCell align="right">{entry.documentName}</TableCell>

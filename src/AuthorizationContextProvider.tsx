@@ -8,6 +8,11 @@ interface ContextType {
   checkIsRegistration: () => void;
   dataEntry: TableEntry[];
   setDataEntry: React.Dispatch<React.SetStateAction<TableEntry[]>>;
+  deleteRow: (entryId: string) => void;
+  changeRow: (
+    rowId: string,
+    data: { error_code: number; error_message: string; data: TableEntry }
+  ) => TableEntry[];
 }
 
 export const AuthorizationContext = createContext<ContextType>({
@@ -17,6 +22,8 @@ export const AuthorizationContext = createContext<ContextType>({
   checkIsRegistration: () => undefined,
   dataEntry: [],
   setDataEntry: () => undefined,
+  deleteRow: () => undefined,
+  changeRow: (rowId, data) => [],
 });
 
 interface Props {
@@ -41,7 +48,13 @@ export const AuthorizationContextProvider: React.FC<Props> = ({ children }) => {
     checkIsRegistration,
     dataEntry,
     setDataEntry,
+    deleteRow,
+    changeRow,
   };
+
+  useEffect(() => {
+    takeData();
+  }, [isLogedIn]);
 
   function checkIsLogedIn() {
     setIsLogedIn(localStorage.getItem("x-auth") !== null);
@@ -68,9 +81,23 @@ export const AuthorizationContextProvider: React.FC<Props> = ({ children }) => {
       });
   }
 
-  useEffect(() => {
-    takeData();
-  }, [isLogedIn]);
+  function deleteRow(entryId: string) {
+    setDataEntry(dataEntry.filter((entry) => entry.id !== entryId));
+  }
+
+  function changeRow(
+    rowId: string,
+    data: { error_code: number; error_message: string; data: TableEntry }
+  ) {
+    const newDataEntry: TableEntry[] = dataEntry.map((entry) => {
+      if (entry.id === rowId) {
+        return data.data;
+      }
+      return entry;
+    });
+    setDataEntry(newDataEntry);
+    return newDataEntry;
+  }
 
   return (
     <AuthorizationContext.Provider value={authorizationContext}>
