@@ -8,7 +8,7 @@ interface ContextType {
   checkisLoggedIn: () => void;
   checkIsRegistration: () => void;
   dataRows: TableEntry[];
-  setdataRows: React.Dispatch<React.SetStateAction<TableEntry[]>>;
+  setDataRows: React.Dispatch<React.SetStateAction<TableEntry[]>>;
   deleteRow: (entryId: string) => void;
   changeRow: (
     rowId: string,
@@ -23,7 +23,7 @@ export const AuthorizationContext = createContext<ContextType>({
   checkisLoggedIn: () => undefined,
   checkIsRegistration: () => undefined,
   dataRows: [],
-  setdataRows: () => undefined,
+  setDataRows: () => undefined,
   deleteRow: () => undefined,
   changeRow: (rowId, data) => [],
 });
@@ -41,7 +41,7 @@ export const AuthorizationContextProvider: React.FC<Props> = ({ children }) => {
     localStorage.getItem("isRegistration") !== null
   );
 
-  const [dataRows, setdataRows] = useState<TableEntry[]>([]);
+  const [dataRows, setDataRows] = useState<TableEntry[]>([]);
 
   const HOST = "https://test.v5.pryaniky.com";
 
@@ -52,7 +52,7 @@ export const AuthorizationContextProvider: React.FC<Props> = ({ children }) => {
     checkisLoggedIn,
     checkIsRegistration,
     dataRows,
-    setdataRows,
+    setDataRows,
     deleteRow,
     changeRow,
   };
@@ -79,12 +79,31 @@ export const AuthorizationContextProvider: React.FC<Props> = ({ children }) => {
     })
       .then((response) => response.json())
       .then((data) => {
-        setdataRows(data.data);
+        const dataWithISOSDate: TableEntry[] = data.data.map(
+          (row: TableEntry) => {
+            const dateCompanySig = new Date(row.companySigDate);
+            const dateEmployeeSig = new Date(row.employeeSigDate);
+            const textCompanySigDate = dateCompanySig.toISOString();
+            const textEmployeeSigDate = dateEmployeeSig.toISOString();
+            return {
+              companySigDate: textCompanySigDate,
+              companySignatureName: row.companySignatureName,
+              documentName: row.documentName,
+              documentStatus: row.documentStatus,
+              documentType: row.documentType,
+              employeeNumber: row.employeeNumber,
+              employeeSigDate: textEmployeeSigDate,
+              employeeSignatureName: row.employeeSignatureName,
+              id: row.id,
+            };
+          }
+        );
+        setDataRows(dataWithISOSDate);
       });
   }
 
   function deleteRow(entryId: string) {
-    setdataRows(dataRows.filter((entry) => entry.id !== entryId));
+    setDataRows(dataRows.filter((entry) => entry.id !== entryId));
   }
 
   function changeRow(
@@ -97,7 +116,7 @@ export const AuthorizationContextProvider: React.FC<Props> = ({ children }) => {
       }
       return entry;
     });
-    setdataRows(newdataRows);
+    setDataRows(newdataRows);
     return newdataRows;
   }
 

@@ -3,7 +3,7 @@ import { useContext } from "react";
 import { AuthorizationContext } from "../AuthorizationContextProvider";
 
 export function AddRow() {
-  const { dataRows, setdataRows } = useContext(AuthorizationContext);
+  const { dataRows, setDataRows } = useContext(AuthorizationContext);
   const newEntry = {
     companySigDate: "2022-12-23T11:19:27.017Z\t",
     companySignatureName: "test",
@@ -38,7 +38,7 @@ export function AddRow() {
         )
           .then((response) => response.json())
           .then((data) => {
-            setdataRows([...dataRows, data.data]);
+            setDataRows([...dataRows, data.data]);
           });
       }}
     >

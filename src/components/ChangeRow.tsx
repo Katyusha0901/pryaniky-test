@@ -7,7 +7,7 @@ interface Props {
 }
 
 export const ChangeRow: React.FC<Props> = ({ rowId }) => {
-  const { dataRows, setdataRows, changeRow, HOST } =
+  const { dataRows, setDataRows, changeRow, HOST } =
     useContext(AuthorizationContext);
   const newEntry = {
     companySigDate: "2022-12-23T11:19:27.017Z\t",
@@ -44,7 +44,7 @@ export const ChangeRow: React.FC<Props> = ({ rowId }) => {
         )
           .then((response) => response.json())
           .then((data) => {
-            setdataRows(changeRow(rowId, data));
+            setDataRows(changeRow(rowId, data));
           });
       }}
     >
