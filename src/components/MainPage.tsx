@@ -3,12 +3,14 @@ import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { TableEntry } from "../Types";
 import { useState } from "react";
 import Button from "@mui/material/Button";
+import { AddRow } from "./AddRow";
+import CircularProgress from "@mui/material/CircularProgress";
+import Box from "@mui/material/Box";
 
 function createData(
   name: string,
@@ -30,6 +32,7 @@ const rows = [
 
 export function MainPage() {
   const [dataEntry, setDataEntry] = useState<TableEntry[]>([]);
+  const [isData, setIsData] = useState<boolean>(dataEntry.length === 0);
   fetch(
     "https://test.v5.pryaniky.com/ru/data/v3/testmethods/docs/userdocs/get",
     {
@@ -42,6 +45,7 @@ export function MainPage() {
   )
     .then((response) => response.json())
     .then((data) => {
+      localStorage.setItem("data", data);
       setDataEntry(data.data);
     });
   (function () {
@@ -50,15 +54,8 @@ export function MainPage() {
       }
     });
   })();
-  // function takeValue(object: object) {
-  //   let values = [];
-  //   for (let prop in object) {
-  //     values.push(prop.replace(/"/g, ""));
-  //   }
-  //   return values;
-  // }
-  // console.log(takeValue(dataEntry[0])[1].replace(/"/g, ""));
-  return (
+
+  return dataEntry.length > 0 ? (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableBody>
@@ -86,9 +83,18 @@ export function MainPage() {
           ))}
         </TableBody>
       </Table>
-      <Button variant="contained" style={{ margin: "20px" }}>
-        Добавить запись
-      </Button>
+      <AddRow />
     </TableContainer>
+  ) : (
+    <Box
+      sx={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        margin: "35px",
+      }}
+    >
+      <CircularProgress />
+    </Box>
   );
 }
