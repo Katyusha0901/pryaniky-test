@@ -14,6 +14,8 @@ import { AuthorizationContext } from "../AuthorizationContextProvider";
 import { useContext } from "react";
 import { Navigate } from "react-router-dom";
 import { RoutesObject } from "../Routes";
+import { useNavigate } from "react-router-dom";
+import { Replay } from "@mui/icons-material";
 
 function Copyright(props: any) {
   return (
@@ -37,7 +39,7 @@ const defaultTheme = createTheme();
 
 export function SignInSide() {
   const { checkisLoggedIn, takeData } = useContext(AuthorizationContext);
-
+  const navigate = useNavigate();
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -54,6 +56,11 @@ export function SignInSide() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(user),
     };
+
+    function nado() {
+      navigate("/registration", { replace: false });
+    }
+
     fetch(
       "https://test.v5.pryaniky.com/ru/data/v3/testmethods/docs/login",
       requestOptions
@@ -67,7 +74,8 @@ export function SignInSide() {
         } else {
           localStorage.removeItem("x-auth");
           checkisLoggedIn();
-          <Navigate to={RoutesObject.registration} />;
+          nado();
+          // <Navigate to={RoutesObject.registration} replace={true} />;
         }
       });
   };

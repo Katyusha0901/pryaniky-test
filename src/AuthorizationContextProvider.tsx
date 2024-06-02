@@ -1,6 +1,7 @@
 import { createContext, ReactNode, useEffect, useState } from "react";
 import { TableEntry } from "./Types";
-
+import { Navigate } from "react-router-dom";
+import { RoutesObject } from "./Routes";
 interface ContextType {
   isLoggedIn: boolean;
   HOST: string;

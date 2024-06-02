@@ -1,11 +1,9 @@
 interface RoutesType {
-  home: string;
+  signIn: string;
   mainPage: string;
-  registration: string;
 }
 
 export const RoutesObject: RoutesType = {
-  home: "/",
+  signIn: "/",
   mainPage: "/mainPage",
-  registration: "/registration",
 };
