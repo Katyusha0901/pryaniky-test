@@ -4,6 +4,7 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
+import Button from "@mui/material/Button";
 import { AddRow } from "./AddRow";
 import { DeleteRow } from "./DeleteRow";
 import { ChangeRow } from "./ChangeRow";

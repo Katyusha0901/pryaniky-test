@@ -32,7 +32,6 @@ export const ChangeRow: React.FC<Props> = ({ rowId }) => {
     body: JSON.stringify(newEntry),
   };
 
-  console.log(dataRows);
   return (
     <Button
       variant="contained"

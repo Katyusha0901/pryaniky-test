@@ -12,6 +12,8 @@ import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { AuthorizationContext } from "../AuthorizationContextProvider";
 import { useContext } from "react";
+import { Navigate } from "react-router-dom";
+import { RoutesObject } from "../Routes";
 
 function Copyright(props: any) {
   return (
@@ -34,8 +36,7 @@ function Copyright(props: any) {
 const defaultTheme = createTheme();
 
 export function SignInSide() {
-  const { checkisLoggedIn, checkIsRegistration } =
-    useContext(AuthorizationContext);
+  const { checkisLoggedIn, takeData } = useContext(AuthorizationContext);
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -62,11 +63,11 @@ export function SignInSide() {
         if (data.data !== null) {
           localStorage.setItem("x-auth", data.data.token);
           checkisLoggedIn();
+          takeData();
         } else {
           localStorage.removeItem("x-auth");
           checkisLoggedIn();
-          localStorage.setItem("isRegistration", JSON.stringify(false));
-          checkIsRegistration();
+          <Navigate to={RoutesObject.registration} />;
         }
       });
   };
