@@ -32,7 +32,6 @@ export function AddRow() {
     body: JSON.stringify(newEntry),
   };
 
-  console.log(isLoading);
   return isLoading ? (
     <Button variant="contained" style={{ margin: "20px" }}>
       Добавить запись
