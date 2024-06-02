@@ -11,7 +11,7 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { ChangeRowsAndAuthorizationContext } from "../ChangeRowsAndAuthorizationContextProvider";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { Navigate } from "react-router-dom";
 import { RoutesObject } from "../Routes";
 import { useNavigate } from "react-router-dom";
@@ -39,8 +39,12 @@ function Copyright(props: any) {
 const defaultTheme = createTheme();
 
 export function SignInSide() {
-  const { checkisLoggedIn, takeData } = useContext(ChangeRowsAndAuthorizationContext);
-  const navigate = useNavigate();
+  const { checkisLoggedIn, takeData } = useContext(
+    ChangeRowsAndAuthorizationContext
+  );
+
+  const [isCorrectUserData, setIsCorrectUserData] = useState<boolean>(true);
+
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -58,10 +62,6 @@ export function SignInSide() {
       body: JSON.stringify(user),
     };
 
-    function nado() {
-      navigate("/registration", { replace: false });
-    }
-
     fetch(`${HOST}/ru/data/v3/testmethods/docs/login`, requestOptions)
       .then((response) => response.json())
       .then((data) => {
@@ -72,7 +72,7 @@ export function SignInSide() {
         } else {
           localStorage.removeItem("x-auth");
           checkisLoggedIn();
-          nado();
+          setIsCorrectUserData(false);
         }
       });
   };
@@ -125,20 +125,32 @@ export function SignInSide() {
                 required
                 fullWidth
                 id="username"
-                label="User Name"
+                label={
+                  isCorrectUserData ? "User Name" : "Enter user{N}, N=1,2,...33"
+                }
                 name="username"
                 autoComplete="username"
                 autoFocus
+                style={
+                  isCorrectUserData
+                    ? { boxShadow: "0px  black" }
+                    : { boxShadow: "1px 1px 0px 1px red" }
+                }
               />
               <TextField
                 margin="normal"
                 required
                 fullWidth
                 name="password"
-                label="Password"
+                label={isCorrectUserData ? "Password" : "Enter 'password'"}
                 type="password"
                 id="password"
                 autoComplete="current-password"
+                style={
+                  isCorrectUserData
+                    ? { boxShadow: "0px  black" }
+                    : { boxShadow: "1px 1px 0px 1px red" }
+                }
               />
               <Button
                 type="submit"
