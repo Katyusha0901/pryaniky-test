@@ -3,6 +3,7 @@ import { useContext, useState } from "react";
 import { ChangeRowsAndAuthorizationContext } from "../ChangeRowsAndAuthorizationContextProvider";
 import { HOST } from "../HostExport";
 import CircularProgress from "@mui/material/CircularProgress";
+import Alert from "@mui/material/Alert";
 
 interface Props {
   rowId: string;
@@ -13,7 +14,8 @@ export const ChangeRow: React.FC<Props> = ({ rowId }) => {
     ChangeRowsAndAuthorizationContext
   );
   const [isLoading, setIsLoading] = useState<boolean>(false);
-
+  const [isErrorInChangeRowData, setIsErrorInChangeRowData] =
+    useState<boolean>(false);
   const newEntry = {
     companySigDate: "2022-12-23T11:19:27.017Z\t",
     companySignatureName: "test",
@@ -37,7 +39,9 @@ export const ChangeRow: React.FC<Props> = ({ rowId }) => {
     body: JSON.stringify(newEntry),
   };
 
-  return isLoading ? (
+  return isErrorInChangeRowData ? (
+    <Alert severity="error">This is an error.</Alert>
+  ) : isLoading ? (
     <Button variant="contained" style={{ margin: "20px" }}>
       Изменить запись
       <CircularProgress color="inherit" style={{ margin: "15px" }} />
@@ -55,7 +59,10 @@ export const ChangeRow: React.FC<Props> = ({ rowId }) => {
         )
           .then((response) => response.json())
           .then((data) => {
-            setDataRows(changeRow(rowId, data));
+            if (data.error_code === 0) {
+            } else {
+              setDataRows(changeRow(rowId, data));
+            }
           })
           .finally(() => setIsLoading(false));
       }}
