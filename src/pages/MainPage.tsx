@@ -4,7 +4,6 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import Button from "@mui/material/Button";
 import { AddRow } from "../MainPage components/AddRow";
 import { DeleteRow } from "../MainPage components/DeleteRow";
 import { ChangeRow } from "../MainPage components/ChangeRow";
@@ -12,11 +11,16 @@ import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
 import { useContext } from "react";
 import { ChangeRowsAndAuthorizationContext } from "../ChangeRowsAndAuthorizationContextProvider";
+import Alert from "@mui/material/Alert";
 
 export function MainPage() {
-  const { dataRows, deleteRow } = useContext(ChangeRowsAndAuthorizationContext);
+  const { dataRows, deleteRow, isErrorInTableData } = useContext(
+    ChangeRowsAndAuthorizationContext
+  );
 
-  return dataRows.length > 0 ? (
+  return isErrorInTableData ? (
+    <Alert severity="error">This is an error.</Alert>
+  ) : dataRows.length > 0 ? (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableBody>

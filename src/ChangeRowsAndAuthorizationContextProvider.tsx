@@ -4,6 +4,7 @@ import { HOST } from "./HostExport";
 
 interface ContextType {
   isLoggedIn: boolean;
+  isErrorInTableData: boolean;
   checkisLoggedIn: () => void;
   dataRows: TableEntry[];
   setDataRows: React.Dispatch<React.SetStateAction<TableEntry[]>>;
@@ -17,6 +18,7 @@ interface ContextType {
 
 export const ChangeRowsAndAuthorizationContext = createContext<ContextType>({
   isLoggedIn: localStorage.getItem("x-auth") !== null,
+  isErrorInTableData: false,
   checkisLoggedIn: () => undefined,
   dataRows: [],
   setDataRows: () => undefined,
@@ -29,15 +31,19 @@ interface Props {
   children: ReactNode;
 }
 
-export const ChangeRowsAndAuthorizationContextProvider: React.FC<Props> = ({ children }) => {
+export const ChangeRowsAndAuthorizationContextProvider: React.FC<Props> = ({
+  children,
+}) => {
   const [isLoggedIn, setisLoggedIn] = useState<boolean>(
     localStorage.getItem("x-auth") !== null
   );
+  const [isErrorInTableData, setIsErrorInTableData] = useState<boolean>(false);
 
   const [dataRows, setDataRows] = useState<TableEntry[]>([]);
 
   const authorizationContext: ContextType = {
     isLoggedIn,
+    isErrorInTableData,
     checkisLoggedIn,
     dataRows,
     setDataRows,
@@ -60,26 +66,30 @@ export const ChangeRowsAndAuthorizationContextProvider: React.FC<Props> = ({ chi
     })
       .then((response) => response.json())
       .then((data) => {
-        const dataWithISOSDate: TableEntry[] = data.data.map(
-          (row: TableEntry) => {
-            const dateCompanySig = new Date(row.companySigDate);
-            const dateEmployeeSig = new Date(row.employeeSigDate);
-            const textCompanySigDate = dateCompanySig.toISOString();
-            const textEmployeeSigDate = dateEmployeeSig.toISOString();
-            return {
-              companySigDate: textCompanySigDate,
-              companySignatureName: row.companySignatureName,
-              documentName: row.documentName,
-              documentStatus: row.documentStatus,
-              documentType: row.documentType,
-              employeeNumber: row.employeeNumber,
-              employeeSigDate: textEmployeeSigDate,
-              employeeSignatureName: row.employeeSignatureName,
-              id: row.id,
-            };
-          }
-        );
-        setDataRows(dataWithISOSDate);
+        if (data.error_code === 0) {
+          const dataWithISOSDate: TableEntry[] = data.data.map(
+            (row: TableEntry) => {
+              const dateCompanySig = new Date(row.companySigDate);
+              const dateEmployeeSig = new Date(row.employeeSigDate);
+              const textCompanySigDate = dateCompanySig.toISOString();
+              const textEmployeeSigDate = dateEmployeeSig.toISOString();
+              return {
+                companySigDate: textCompanySigDate,
+                companySignatureName: row.companySignatureName,
+                documentName: row.documentName,
+                documentStatus: row.documentStatus,
+                documentType: row.documentType,
+                employeeNumber: row.employeeNumber,
+                employeeSigDate: textEmployeeSigDate,
+                employeeSignatureName: row.employeeSignatureName,
+                id: row.id,
+              };
+            }
+          );
+          setDataRows(dataWithISOSDate);
+        } else {
+          setIsErrorInTableData(true);
+        }
       });
   }
 
