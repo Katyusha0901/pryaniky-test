@@ -16,6 +16,7 @@ import { Navigate } from "react-router-dom";
 import { RoutesObject } from "../Routes";
 import { useNavigate } from "react-router-dom";
 import { Replay } from "@mui/icons-material";
+import { HOST } from "../HostExport";
 
 function Copyright(props: any) {
   return (
@@ -61,10 +62,7 @@ export function SignInSide() {
       navigate("/registration", { replace: false });
     }
 
-    fetch(
-      "https://test.v5.pryaniky.com/ru/data/v3/testmethods/docs/login",
-      requestOptions
-    )
+    fetch(`${HOST}/ru/data/v3/testmethods/docs/login`, requestOptions)
       .then((response) => response.json())
       .then((data) => {
         if (data.data !== null) {

@@ -1,6 +1,7 @@
 import Button from "@mui/material/Button";
 import { useContext } from "react";
 import { AuthorizationContext } from "../AuthorizationContextProvider";
+import { HOST } from "../HostExport";
 
 export function AddRow() {
   const { dataRows, setDataRows } = useContext(AuthorizationContext);
@@ -33,7 +34,7 @@ export function AddRow() {
       style={{ margin: "20px" }}
       onClick={() => {
         fetch(
-          "https://test.v5.pryaniky.com/ru/data/v3/testmethods/docs/userdocs/create",
+          `${HOST}/data/v3/testmethods/docs/userdocs/create`,
           requestOptions
         )
           .then((response) => response.json())

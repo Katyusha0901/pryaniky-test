@@ -2,9 +2,9 @@ import { createContext, ReactNode, useEffect, useState } from "react";
 import { TableEntry } from "./Types";
 import { Navigate } from "react-router-dom";
 import { RoutesObject } from "./Routes";
+import { HOST } from "./HostExport";
 interface ContextType {
   isLoggedIn: boolean;
-  HOST: string;
   checkisLoggedIn: () => void;
   dataRows: TableEntry[];
   setDataRows: React.Dispatch<React.SetStateAction<TableEntry[]>>;
@@ -18,7 +18,6 @@ interface ContextType {
 
 export const AuthorizationContext = createContext<ContextType>({
   isLoggedIn: localStorage.getItem("x-auth") !== null,
-  HOST: "https://test.v5.pryaniky.com",
   checkisLoggedIn: () => undefined,
   dataRows: [],
   setDataRows: () => undefined,
@@ -38,11 +37,8 @@ export const AuthorizationContextProvider: React.FC<Props> = ({ children }) => {
 
   const [dataRows, setDataRows] = useState<TableEntry[]>([]);
 
-  const HOST = "https://test.v5.pryaniky.com";
-
   const authorizationContext: ContextType = {
     isLoggedIn,
-    HOST,
     checkisLoggedIn,
     dataRows,
     setDataRows,
@@ -56,16 +52,13 @@ export const AuthorizationContextProvider: React.FC<Props> = ({ children }) => {
   }
 
   function takeData() {
-    fetch(
-      `https://test.v5.pryaniky.com/ru/data/v3/testmethods/docs/userdocs/get`,
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          "x-auth": `${localStorage.getItem("x-auth")}`,
-        },
-      }
-    )
+    fetch(`${HOST}/ru/data/v3/testmethods/docs/userdocs/get`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "x-auth": `${localStorage.getItem("x-auth")}`,
+      },
+    })
       .then((response) => response.json())
       .then((data) => {
         const dataWithISOSDate: TableEntry[] = data.data.map(

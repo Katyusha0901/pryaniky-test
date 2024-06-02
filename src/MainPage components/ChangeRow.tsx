@@ -1,14 +1,14 @@
 import Button from "@mui/material/Button";
 import { useContext } from "react";
 import { AuthorizationContext } from "../AuthorizationContextProvider";
+import { HOST } from "../HostExport";
 
 interface Props {
   rowId: string;
 }
 
 export const ChangeRow: React.FC<Props> = ({ rowId }) => {
-  const { dataRows, setDataRows, changeRow, HOST } =
-    useContext(AuthorizationContext);
+  const { dataRows, setDataRows, changeRow } = useContext(AuthorizationContext);
   const newEntry = {
     companySigDate: "2022-12-23T11:19:27.017Z\t",
     companySignatureName: "test",
