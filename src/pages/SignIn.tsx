@@ -12,11 +12,8 @@ import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { ChangeRowsAndAuthorizationContext } from "../ChangeRowsAndAuthorizationContextProvider";
 import { useContext, useState } from "react";
-import { Navigate } from "react-router-dom";
-import { RoutesObject } from "../Routes";
-import { useNavigate } from "react-router-dom";
-import { Replay } from "@mui/icons-material";
 import { HOST } from "../HostExport";
+import Alert from "@mui/material/Alert";
 
 function Copyright(props: any) {
   return (
@@ -44,6 +41,7 @@ export function SignInSide() {
   );
 
   const [isCorrectUserData, setIsCorrectUserData] = useState<boolean>(true);
+  const [isErrorInTableData, setIsErrorInTableData] = useState<boolean>(false);
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -65,19 +63,25 @@ export function SignInSide() {
     fetch(`${HOST}/ru/data/v3/testmethods/docs/login`, requestOptions)
       .then((response) => response.json())
       .then((data) => {
-        if (data.data !== null) {
-          localStorage.setItem("x-auth", data.data.token);
-          checkisLoggedIn();
-          takeData();
+        if (data.error_code === 0) {
+          if (data.data !== null) {
+            localStorage.setItem("x-auth", data.data.token);
+            checkisLoggedIn();
+            takeData();
+          } else {
+            localStorage.removeItem("x-auth");
+            checkisLoggedIn();
+            setIsCorrectUserData(false);
+          }
         } else {
-          localStorage.removeItem("x-auth");
-          checkisLoggedIn();
-          setIsCorrectUserData(false);
+          setIsErrorInTableData(true);
         }
       });
   };
 
-  return (
+  return isErrorInTableData ? (
+    <Alert severity="error">This is an error.</Alert>
+  ) : (
     <ThemeProvider theme={defaultTheme}>
       <Grid container component="main" sx={{ height: "100vh" }}>
         <CssBaseline />
