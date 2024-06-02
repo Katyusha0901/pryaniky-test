@@ -10,7 +10,7 @@ interface Props {
 }
 
 export const ChangeRow: React.FC<Props> = ({ rowId }) => {
-  const { dataRows, setDataRows, changeRow } = useContext(
+  const { setDataRows, changeRow } = useContext(
     ChangeRowsAndAuthorizationContext
   );
   const [isLoading, setIsLoading] = useState<boolean>(false);
