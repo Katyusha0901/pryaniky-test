@@ -3,12 +3,15 @@ import { useContext, useState } from "react";
 import { ChangeRowsAndAuthorizationContext } from "../ChangeRowsAndAuthorizationContextProvider";
 import { HOST } from "../HostExport";
 import CircularProgress from "@mui/material/CircularProgress";
+import Alert from "@mui/material/Alert";
 
 export function AddRow() {
   const { dataRows, setDataRows } = useContext(
     ChangeRowsAndAuthorizationContext
   );
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isErrorInAddRowData, setIsErrorInAddRowData] =
+    useState<boolean>(false);
   const newEntry = {
     companySigDate: "2022-12-23T11:19:27.017Z\t",
     companySignatureName: "test",
@@ -32,7 +35,9 @@ export function AddRow() {
     body: JSON.stringify(newEntry),
   };
 
-  return isLoading ? (
+  return isErrorInAddRowData ? (
+    <Alert severity="error">This is an error.</Alert>
+  ) : isLoading ? (
     <Button variant="contained" style={{ margin: "20px" }}>
       Добавить запись
       <CircularProgress color="inherit" style={{ margin: "15px" }} />
@@ -52,7 +57,11 @@ export function AddRow() {
             return response.json();
           })
           .then((data) => {
-            setDataRows([...dataRows, data.data]);
+            if (data.error_code === 0) {
+              setDataRows([...dataRows, data.data]);
+            } else {
+              setIsErrorInAddRowData(true);
+            }
           })
           .finally(() => setIsLoading(false));
       }}

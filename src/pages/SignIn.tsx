@@ -41,7 +41,7 @@ export function SignInSide() {
   );
 
   const [isCorrectUserData, setIsCorrectUserData] = useState<boolean>(true);
-  const [isErrorInSignInData, setisErrorInSignInData] =
+  const [isErrorInSignInData, setIsErrorInSignInData] =
     useState<boolean>(false);
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -75,7 +75,7 @@ export function SignInSide() {
             setIsCorrectUserData(false);
           }
         } else {
-          setisErrorInSignInData(true);
+          setIsErrorInSignInData(true);
         }
       });
   };
