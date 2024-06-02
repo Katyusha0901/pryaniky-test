@@ -1,8 +1,7 @@
 import { createContext, ReactNode, useEffect, useState } from "react";
 import { TableEntry } from "./Types";
-import { Navigate } from "react-router-dom";
-import { RoutesObject } from "./Routes";
 import { HOST } from "./HostExport";
+
 interface ContextType {
   isLoggedIn: boolean;
   checkisLoggedIn: () => void;
@@ -16,7 +15,7 @@ interface ContextType {
   takeData: () => void;
 }
 
-export const AuthorizationContext = createContext<ContextType>({
+export const ChangeRowsAndAuthorizationContext = createContext<ContextType>({
   isLoggedIn: localStorage.getItem("x-auth") !== null,
   checkisLoggedIn: () => undefined,
   dataRows: [],
@@ -30,7 +29,7 @@ interface Props {
   children: ReactNode;
 }
 
-export const AuthorizationContextProvider: React.FC<Props> = ({ children }) => {
+export const ChangeRowsAndAuthorizationContextProvider: React.FC<Props> = ({ children }) => {
   const [isLoggedIn, setisLoggedIn] = useState<boolean>(
     localStorage.getItem("x-auth") !== null
   );
@@ -103,8 +102,8 @@ export const AuthorizationContextProvider: React.FC<Props> = ({ children }) => {
   }
 
   return (
-    <AuthorizationContext.Provider value={authorizationContext}>
+    <ChangeRowsAndAuthorizationContext.Provider value={authorizationContext}>
       {children}
-    </AuthorizationContext.Provider>
+    </ChangeRowsAndAuthorizationContext.Provider>
   );
 };

@@ -11,10 +11,10 @@ import { ChangeRow } from "../MainPage components/ChangeRow";
 import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
 import { useContext } from "react";
-import { AuthorizationContext } from "../AuthorizationContextProvider";
+import { ChangeRowsAndAuthorizationContext } from "../ChangeRowsAndAuthorizationContextProvider";
 
 export function MainPage() {
-  const { dataRows, deleteRow } = useContext(AuthorizationContext);
+  const { dataRows, deleteRow } = useContext(ChangeRowsAndAuthorizationContext);
 
   return dataRows.length > 0 ? (
     <TableContainer component={Paper}>

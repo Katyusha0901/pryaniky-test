@@ -10,7 +10,7 @@ import Grid from "@mui/material/Grid";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { AuthorizationContext } from "../AuthorizationContextProvider";
+import { ChangeRowsAndAuthorizationContext } from "../ChangeRowsAndAuthorizationContextProvider";
 import { useContext } from "react";
 import { Navigate } from "react-router-dom";
 import { RoutesObject } from "../Routes";
@@ -39,7 +39,7 @@ function Copyright(props: any) {
 const defaultTheme = createTheme();
 
 export function SignInSide() {
-  const { checkisLoggedIn, takeData } = useContext(AuthorizationContext);
+  const { checkisLoggedIn, takeData } = useContext(ChangeRowsAndAuthorizationContext);
   const navigate = useNavigate();
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -73,7 +73,6 @@ export function SignInSide() {
           localStorage.removeItem("x-auth");
           checkisLoggedIn();
           nado();
-          // <Navigate to={RoutesObject.registration} replace={true} />;
         }
       });
   };

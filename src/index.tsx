@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { App } from "./App";
-import { AuthorizationContextProvider } from "./AuthorizationContextProvider";
+import { ChangeRowsAndAuthorizationContextProvider } from "./ChangeRowsAndAuthorizationContextProvider";
 import { BrowserRouter as Router } from "react-router-dom";
 
 const root = ReactDOM.createRoot(
@@ -9,10 +9,10 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
-    <AuthorizationContextProvider>
+    <ChangeRowsAndAuthorizationContextProvider>
       <Router>
         <App />
       </Router>
-    </AuthorizationContextProvider>
+    </ChangeRowsAndAuthorizationContextProvider>
   </React.StrictMode>
 );

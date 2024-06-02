@@ -1,13 +1,13 @@
 import { SignInSide } from "./pages/SignIn";
 import { MainPage } from "./pages/MainPage";
-import { AuthorizationContext } from "./AuthorizationContextProvider";
+import { ChangeRowsAndAuthorizationContext } from "./ChangeRowsAndAuthorizationContextProvider";
 import { useContext } from "react";
 import { RoutesObject } from "./Routes";
 import { Routes, Route } from "react-router-dom";
 import { Navigate } from "react-router-dom";
 
 export const App: React.FC = () => {
-  const { isLoggedIn } = useContext(AuthorizationContext);
+  const { isLoggedIn } = useContext(ChangeRowsAndAuthorizationContext);
 
   return isLoggedIn ? (
     <Routes>
