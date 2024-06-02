@@ -41,7 +41,8 @@ export function SignInSide() {
   );
 
   const [isCorrectUserData, setIsCorrectUserData] = useState<boolean>(true);
-  const [isErrorInTableData, setIsErrorInTableData] = useState<boolean>(false);
+  const [isErrorInSignInData, setisErrorInSignInData] =
+    useState<boolean>(false);
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -74,12 +75,12 @@ export function SignInSide() {
             setIsCorrectUserData(false);
           }
         } else {
-          setIsErrorInTableData(true);
+          setisErrorInSignInData(true);
         }
       });
   };
 
-  return isErrorInTableData ? (
+  return isErrorInSignInData ? (
     <Alert severity="error">This is an error.</Alert>
   ) : (
     <ThemeProvider theme={defaultTheme}>
