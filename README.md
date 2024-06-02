@@ -1,6 +1,6 @@
 # Job test by Bondareva Ekaterina
 
-Available at https://katyusha0901.github.io/countries-list/
+Available at https://katyusha0901.github.io/pryaniky-test/
 
 ## Getting Started with Create React App
 
