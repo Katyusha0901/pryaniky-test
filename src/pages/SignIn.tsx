@@ -13,7 +13,6 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { ChangeRowsAndAuthorizationContext } from "../ChangeRowsAndAuthorizationContextProvider";
 import { useContext, useState } from "react";
 import { HOST } from "../HostExport";
-import Alert from "@mui/material/Alert";
 
 function Copyright(props: any) {
   return (
@@ -41,8 +40,6 @@ export function SignInSide() {
   );
 
   const [isCorrectUserData, setIsCorrectUserData] = useState<boolean>(true);
-  const [isErrorInSignInData, setIsErrorInSignInData] =
-    useState<boolean>(false);
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -64,25 +61,19 @@ export function SignInSide() {
     fetch(`${HOST}/ru/data/v3/testmethods/docs/login`, requestOptions)
       .then((response) => response.json())
       .then((data) => {
-        if (data.error_code === 0) {
-          if (data.data !== null) {
-            localStorage.setItem("x-auth", data.data.token);
-            checkisLoggedIn();
-            takeData();
-          } else {
-            localStorage.removeItem("x-auth");
-            checkisLoggedIn();
-            setIsCorrectUserData(false);
-          }
+        if (data.data !== null) {
+          localStorage.setItem("x-auth", data.data.token);
+          checkisLoggedIn();
+          takeData();
         } else {
-          setIsErrorInSignInData(true);
+          localStorage.removeItem("x-auth");
+          checkisLoggedIn();
+          setIsCorrectUserData(false);
         }
       });
   };
 
-  return isErrorInSignInData ? (
-    <Alert severity="error">This is an error.</Alert>
-  ) : (
+  return (
     <ThemeProvider theme={defaultTheme}>
       <Grid container component="main" sx={{ height: "100vh" }}>
         <CssBaseline />
