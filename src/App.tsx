@@ -1,6 +1,6 @@
 import { SignInSide } from "./pages/SignIn";
 import { MainPage } from "./pages/MainPage";
-import { ChangeRowsAndAuthorizationContext } from "./ChangeRowsAndAuthorizationContextProvider";
+import { ChangeRowsAndAuthorizationContext } from "./context/ChangeRowsContext";
 import { useContext } from "react";
 import { RoutesObject } from "./Routes";
 import { Routes, Route } from "react-router-dom";

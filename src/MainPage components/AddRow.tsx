@@ -1,14 +1,12 @@
 import Button from "@mui/material/Button";
 import { useContext, useState } from "react";
-import { ChangeRowsAndAuthorizationContext } from "../ChangeRowsAndAuthorizationContextProvider";
+import { ChangeRowsContext } from "../context/ChangeRowsContext";
 import { HOST } from "../HostExport";
 import CircularProgress from "@mui/material/CircularProgress";
 import Alert from "@mui/material/Alert";
 
 export function AddRow() {
-  const { dataRows, setDataRows } = useContext(
-    ChangeRowsAndAuthorizationContext
-  );
+  const { dataRows, setDataRows } = useContext(ChangeRowsContext);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isErrorInAddRowData, setIsErrorInAddRowData] =
     useState<boolean>(false);

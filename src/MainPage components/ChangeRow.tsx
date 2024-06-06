@@ -1,6 +1,6 @@
 import Button from "@mui/material/Button";
 import { useContext, useState } from "react";
-import { ChangeRowsAndAuthorizationContext } from "../ChangeRowsAndAuthorizationContextProvider";
+import { ChangeRowsContext } from "../context/ChangeRowsContext";
 import { HOST } from "../HostExport";
 import CircularProgress from "@mui/material/CircularProgress";
 import Alert from "@mui/material/Alert";
@@ -10,9 +10,7 @@ interface Props {
 }
 
 export const ChangeRow: React.FC<Props> = ({ rowId }) => {
-  const { setDataRows, changeRow } = useContext(
-    ChangeRowsAndAuthorizationContext
-  );
+  const { setDataRows, changeRow } = useContext(ChangeRowsContext);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isErrorInChangeRowData, setIsErrorInChangeRowData] =
     useState<boolean>(false);

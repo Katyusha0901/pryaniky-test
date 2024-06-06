@@ -10,13 +10,12 @@ import { ChangeRow } from "../MainPage components/ChangeRow";
 import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
 import { useContext } from "react";
-import { ChangeRowsAndAuthorizationContext } from "../ChangeRowsAndAuthorizationContextProvider";
+import { ChangeRowsContext } from "../context/ChangeRowsContext";
 import Alert from "@mui/material/Alert";
 
 export function MainPage() {
-  const { dataRows, deleteRow, isErrorInTableData } = useContext(
-    ChangeRowsAndAuthorizationContext
-  );
+  const { dataRows, deleteRow, isErrorInTableData } =
+    useContext(ChangeRowsContext);
 
   return isErrorInTableData ? (
     <Alert severity="error">This is an error.</Alert>

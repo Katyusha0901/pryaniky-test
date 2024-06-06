@@ -10,7 +10,8 @@ import Grid from "@mui/material/Grid";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { ChangeRowsAndAuthorizationContext } from "../ChangeRowsAndAuthorizationContextProvider";
+import { ChangeRowsContext } from "../context/ChangeRowsContext";
+import { AuthorizationContext } from "../context/AuthorizationContext";
 import { useContext, useState } from "react";
 import { HOST } from "../HostExport";
 
@@ -35,9 +36,8 @@ function Copyright(props: any) {
 const defaultTheme = createTheme();
 
 export function SignInSide() {
-  const { checkisLoggedIn, takeData } = useContext(
-    ChangeRowsAndAuthorizationContext
-  );
+  const { takeData } = useContext(ChangeRowsContext);
+  const { checkisLoggedIn } = useContext(AuthorizationContext);
 
   const [isCorrectUserData, setIsCorrectUserData] = useState<boolean>(true);
 

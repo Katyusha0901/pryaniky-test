@@ -1,11 +1,9 @@
 import { createContext, ReactNode, useState } from "react";
-import { TableEntry } from "./Types";
-import { HOST } from "./HostExport";
+import { TableEntry } from "../Types";
+import { HOST } from "../HostExport";
 
 interface ContextType {
-  isLoggedIn: boolean;
   isErrorInTableData: boolean;
-  checkisLoggedIn: () => void;
   dataRows: TableEntry[];
   setDataRows: React.Dispatch<React.SetStateAction<TableEntry[]>>;
   deleteRow: (entryId: string) => void;
@@ -16,10 +14,8 @@ interface ContextType {
   takeData: () => void;
 }
 
-export const ChangeRowsAndAuthorizationContext = createContext<ContextType>({
-  isLoggedIn: localStorage.getItem("x-auth") !== null,
+export const ChangeRowsContext = createContext<ContextType>({
   isErrorInTableData: false,
-  checkisLoggedIn: () => undefined,
   dataRows: [],
   setDataRows: () => undefined,
   deleteRow: () => undefined,
@@ -31,30 +27,21 @@ interface Props {
   children: ReactNode;
 }
 
-export const ChangeRowsAndAuthorizationContextProvider: React.FC<Props> = ({
+export const ChangeRowsContextProvider: React.FC<Props> = ({
   children,
 }) => {
-  const [isLoggedIn, setisLoggedIn] = useState<boolean>(
-    localStorage.getItem("x-auth") !== null
-  );
   const [isErrorInTableData, setIsErrorInTableData] = useState<boolean>(false);
 
   const [dataRows, setDataRows] = useState<TableEntry[]>([]);
 
   const authorizationContext: ContextType = {
-    isLoggedIn,
     isErrorInTableData,
-    checkisLoggedIn,
     dataRows,
     setDataRows,
     deleteRow,
     changeRow,
     takeData,
   };
-
-  function checkisLoggedIn() {
-    setisLoggedIn(localStorage.getItem("x-auth") !== null);
-  }
 
   function takeData() {
     fetch(`${HOST}/ru/data/v3/testmethods/docs/userdocs/get`, {
@@ -112,8 +99,8 @@ export const ChangeRowsAndAuthorizationContextProvider: React.FC<Props> = ({
   }
 
   return (
-    <ChangeRowsAndAuthorizationContext.Provider value={authorizationContext}>
+    <ChangeRowsContext.Provider value={authorizationContext}>
       {children}
-    </ChangeRowsAndAuthorizationContext.Provider>
+    </ChangeRowsContext.Provider>
   );
 };
