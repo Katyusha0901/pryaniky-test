@@ -27,14 +27,12 @@ interface Props {
   children: ReactNode;
 }
 
-export const ChangeRowsContextProvider: React.FC<Props> = ({
-  children,
-}) => {
+export const ChangeRowsContextProvider: React.FC<Props> = ({ children }) => {
   const [isErrorInTableData, setIsErrorInTableData] = useState<boolean>(false);
 
   const [dataRows, setDataRows] = useState<TableEntry[]>([]);
 
-  const authorizationContext: ContextType = {
+  const changeRowsContext: ContextType = {
     isErrorInTableData,
     dataRows,
     setDataRows,
@@ -99,7 +97,7 @@ export const ChangeRowsContextProvider: React.FC<Props> = ({
   }
 
   return (
-    <ChangeRowsContext.Provider value={authorizationContext}>
+    <ChangeRowsContext.Provider value={changeRowsContext}>
       {children}
     </ChangeRowsContext.Provider>
   );
