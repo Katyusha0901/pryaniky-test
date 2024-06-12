@@ -1,10 +1,10 @@
 {
   "files": {
-    "main.js": "/pryaniky-test/static/js/main.9a733c5f.js",
+    "main.js": "/pryaniky-test/static/js/main.ecf3a18a.js",
     "index.html": "/pryaniky-test/index.html",
-    "main.9a733c5f.js.map": "/pryaniky-test/static/js/main.9a733c5f.js.map"
+    "main.ecf3a18a.js.map": "/pryaniky-test/static/js/main.ecf3a18a.js.map"
   },
   "entrypoints": [
-    "static/js/main.9a733c5f.js"
+    "static/js/main.ecf3a18a.js"
   ]
 }
