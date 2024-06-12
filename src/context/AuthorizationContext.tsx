@@ -19,10 +19,6 @@ export const AuthorizationContextProvider: React.FC<Props> = ({ children }) => {
   const [isLoggedIn, setisLoggedIn] = useState<boolean>(
     localStorage.getItem("x-auth") !== null
   );
-  const [isErrorInTableData, setIsErrorInTableData] = useState<boolean>(false);
-
-  const [dataRows, setDataRows] = useState<TableEntry[]>([]);
-
   const authorizationContext: ContextType = {
     isLoggedIn,
     checkisLoggedIn,
